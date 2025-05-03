@@ -1,0 +1,7 @@
+{
+    "IMGBB_KEY": "88fdb801009a4ebf36b51b88a5efacbe",
+    "SECRET_KEY": "ChatMate",
+    "UPLOAD_FOLDER": "chatapp/uploads/",
+    "SQLALCHEMY_DATABASE_URI": "sqlite:///database.db",
+    "GIPHY_API_KEY": "pguXysRGTrNHTYu7ZeeUIWZs9RDyAGHk"
+  }
