@@ -49,6 +49,7 @@ class User(db.Model, UserMixin):
     random_search_enabled = db.Column(db.Boolean, default=True)
     img = db.Column(db.String(350)) # img of user
     gender = db.Column(db.String(30)) # Gender
+    is_superuser = db.Column(db.Boolean, default=False) 
     rooms = db.relationship('Room', secondary=user_room_association, back_populates='users')
     admin_rooms = db.relationship('Room', secondary=admin_rooms_association, back_populates='admins')
     messages = db.relationship('Message', back_populates='user')
