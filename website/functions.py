@@ -103,6 +103,8 @@ def get_rooms_count():
 
 def get_public_rooms():
     public_rooms = Room.query.filter_by(is_private=False).all()
+    for room in public_rooms:
+        print(f"Room ID: {room.id}, Is Private: {room.is_private}")  # Debugging line
     return public_rooms
 
 #########################admin stuff###########################

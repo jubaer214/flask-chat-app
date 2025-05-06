@@ -100,14 +100,12 @@ def create_room_route():
             if request.method == 'POST':
                 # Process form submission and create the room
                 room_name = request.form.get('room_name')
-                room_type = request.form.get('room_type')
+                #room_type = request.form.get('room_type')
                 room_keywords = request.form.get('room_keywords')
                 room_name = bleach.clean(room_name)
                 room_keywords = bleach.clean(room_keywords)
-                if room_type == 'is_private':
-                    is_private = True
-                else:
-                    is_private = False
+                is_private = True if request.form.get('is_private') else False
+
                 # Create room and get the room ID and invite code
                 room_id, invite_code = create_room(room_name=room_name, is_private=is_private, admin_id=current_user.id, description=room_keywords)
                 flash(f'🎉 Room <strong>{room_name}</strong> created successfully! <strong>Code: {invite_code}</strong>', category='success')
@@ -293,3 +291,35 @@ def dm_view(recipient_id):
 
     private_messages = get_private_messages(current_user, recipient)
     return render_template('dm.html', recipient=recipient, private_messages=private_messages)
+
+
+
+# ✅ Route to show all available routes (for superusers only)
+@views.route('/all-link')
+@login_required
+def all_links():
+    if not current_user.is_superuser:
+        return "Unauthorized", 403
+    
+    rules = [str(rule) for rule in current_app.url_map.iter_rules()]
+    return render_template('all_links.html', rules=rules)
+
+# ✅ Route to return personal and project info
+@views.route('/info')
+def info():
+    personal_info = {
+        "name": "Dipto Mohammad Rimon Sadman",
+        "id": "2221670",
+        "personal_notion_page": "https://www.notion.so/your-notion",
+        "personal_group_page_notion": "https://www.notion.so/your-group-notion",
+        "github_id": "jubaer214"
+    }
+    project_info = {
+        "name": "ChatMate",
+        "project_github_link": "https://github.com/jubaer214/flask-chat-app"
+    }
+    return render_template('info.html', personal_info=personal_info, project_info=project_info)
+
+@views.route('/marks')
+def marks():
+    return render_template('marks.html')

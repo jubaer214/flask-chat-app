@@ -1,0 +1,83 @@
+<!-- marks.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marks Table</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script> <!-- Include D3.js -->
+    <style>
+        table {
+            width: 50%;
+            margin: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Marks Table</h2>
+    <div id="marks-table"></div>
+
+    <script>
+        // Data to be displayed in the table
+        const marksData = [
+            {
+                mark: "5",
+                justification: "it shows the joined rooms, public rooms",
+                internalRoute: "/dashboard"
+            },
+            {
+                mark: "5",
+                justification: "By using this route, user can create public or private rooms",
+                internalRoute: "/create"
+            },
+            {
+                mark: "5",
+                justification: "superuser created",
+                internalRoute: "/all-link, /info"
+            }
+        ];
+
+        // Select the div element where the table will be added
+        const tableDiv = d3.select("#marks-table");
+
+        // Create the table element
+        const table = tableDiv.append("table");
+
+        // Create table header
+        const thead = table.append("thead");
+        thead.append("tr")
+            .selectAll("th")
+            .data(["mark", "justification for this marking", "internal route"])
+            .enter()
+            .append("th")
+            .text(d => d);
+
+        // Create table body
+        const tbody = table.append("tbody");
+
+        // Bind data and create rows
+        const rows = tbody.selectAll("tr")
+            .data(marksData)
+            .enter()
+            .append("tr");
+
+        // Create columns for each row
+        rows.selectAll("td")
+            .data(d => [d.mark, d.justification, d.internalRoute])
+            .enter()
+            .append("td")
+            .text(d => d);
+    </script>
+
+</body>
+</html>
